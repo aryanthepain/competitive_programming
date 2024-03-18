@@ -36,5 +36,5 @@ git restore --staged <file> // unstage staged file
 
 //to copy, change message
 git add .
-git commit -m "minimum_difference_34A"
+git commit -m "even_odd_318A"
 git push -u origin main
