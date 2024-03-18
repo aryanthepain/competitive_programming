@@ -36,5 +36,5 @@ git restore --staged <file> // unstage staged file
 
 //to copy, change message
 git add .
-git commit -m "parallelepiped_224A"
+git commit -m "minimum_difference_34A"
 git push -u origin main
