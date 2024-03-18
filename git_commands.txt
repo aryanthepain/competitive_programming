@@ -1,5 +1,3 @@
-I am Aryan Gupta.
-
 code . //open in vs code
 git init //integrate in github
 new repo
@@ -36,5 +34,5 @@ git restore --staged <file> // unstage staged file
 
 //to copy, change message
 git add .
-git commit -m "even_odd_318A"
+git commit -m "lowest_element_205A"
 git push -u origin main
