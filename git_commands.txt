@@ -32,3 +32,9 @@ git log --oneline
 git clone https://github.com/aryanthepain/hello.git //take in your system
 
 git restore --staged <file> // unstage staged file
+
+
+//to copy, change message
+git add .
+git commit -m "parallelepiped_224A"
+git push -u origin main
