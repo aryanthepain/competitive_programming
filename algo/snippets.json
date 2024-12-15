@@ -1,0 +1,255 @@
+{
+	"author": {
+		"prefix": "aut",
+		"body": "// author: Aryanthepain",
+		"description": "starting point"
+	},
+	"start": {
+		"prefix": [
+			"start",
+			"include"
+		],
+		"body": [
+			"// author: Aryanthepain",
+			"#include <bits/stdc++.h>",
+			"typedef long long ll;",
+			"using namespace std;",
+			"#define You_are_the_best ios::sync_with_stdio(false); cin.tie(0)",
+			"",
+			"#ifndef ONLINE_JUDGE",
+			"#include \"./algo/debug.h\"",
+			"#else",
+			"#define debug(...) 42",
+			"#endif",
+			"",
+			"void lessgo();",
+			"int main()",
+			"{",
+			"\tYou_are_the_best;",
+			"\tsize_t t;",
+			"\tcin >> t;",
+			"\t// t=1;",
+			"",
+			"\twhile(t--){",
+			"\tlessgo();",
+			"\t}",
+			"",
+			"\treturn 0;",
+			"}",
+			"",
+			"void lessgo(){",
+			"\t$0",
+			"",
+			"\treturn;",
+			"}"
+		],
+		"description": "starting point"
+	},
+	"start single": {
+		"prefix": [
+			"start_single",
+			"include_single"
+		],
+		"body": [
+			"// author: Aryanthepain",
+			"#include <bits/stdc++.h>",
+			"typedef long long ll;",
+			"using namespace std;",
+			"#define You_are_the_best ios::sync_with_stdio(false); cin.tie(0)",
+			"",
+			"#ifndef ONLINE_JUDGE",
+			"#include \"./algo/debug.h\"",
+			"#else",
+			"#define debug(...) 42",
+			"#endif",
+			"",
+			"int main()",
+			"{",
+			"\tYou_are_the_best;",
+			"\t$0",
+			"",
+			"\treturn 0;",
+			"}"
+		],
+		"description": "starting point"
+	},
+	"start project": {
+		"prefix": [
+			"startproj",
+			"include"
+		],
+		"body": [
+			"//author: Aryanthepain",
+			"#include \"${1:file_name}.h\"\n",
+			"${2:fn_type} ${3:fn_name}(){\n\t$0",
+			"}"
+		],
+		"description": "starting point"
+	},
+	"header file start": {
+		"prefix": [
+			"hstart",
+			"starth"
+		],
+		"body": [
+			"// author: Aryanthepain",
+			"#ifndef ${1:FILE_NAME}_H",
+			"#define ${1}_H",
+			"#include <bits/stdc++.h>",
+			"using namespace std;\n",
+			"${0}\n",
+			"#endif // ${1:FILE_NAME}_H"
+		],
+		"description": "start a header file"
+	},
+	"input variable": {
+		"prefix": [
+			"input",
+			"cinv"
+		],
+		"body": [
+			"${1:size_t} ${2:variable name}; cin >> $2;$0"
+		],
+		"description": "input a variable"
+	},
+	"input": {
+		"prefix": "cin",
+		"body": [
+			"cin >> $1;$0"
+		],
+		"description": "input"
+	},
+	"output": {
+		"prefix": "cout",
+		"body": [
+			"cout << $1 << endl;$0"
+		],
+		"description": "output"
+	},
+	"error": {
+		"prefix": [
+			"cerr",
+			"error"
+		],
+		"body": [
+			"cerr << $1 << endl;$0"
+		],
+		"description": "output error"
+	},
+	"template datatype": {
+		"prefix": [
+			"template",
+			"typename"
+		],
+		"body": [
+			"template<typename T>\n"
+		]
+	},
+	"menubar.cpp": {
+		"prefix": [
+			"menu",
+			"menucpp",
+			"menubar"
+		],
+		"body": [
+			"// author: Aryanthepain",
+			"#include <bits/stdc++.h>",
+			"#include \"${1:file_name}.h\"",
+			"using namespace std;",
+			"",
+			"int menu()",
+			"{",
+			"    cout << \"Press the number corresponding to the function you want to execute(-1 to exit)\" << endl;",
+			"    cout << \"1. Insert Element\" << endl;",
+			"    cout << \"2. Delete Element\" << endl;",
+			"    cout << \"3. Print elements as tree\" << endl;",
+			"    cout << \"4. Search element\" << endl;",
+			"    cout << \"5. pre order traversal\" << endl;",
+			"    cout << \"6. in order traversal\" << endl;",
+			"    cout << \"7. post order traversal\" << endl;",
+			"",
+			"    int n;",
+			"    cin >> n;",
+			"",
+			"    return n;",
+			"}",
+			"",
+			"int menuBar()",
+			"{",
+			"    cout << \"Functions on binary search tree\" << endl;",
+			"    binarySearchTree t;",
+			"",
+			"    while (true)",
+			"    {",
+			"        int me = menu();",
+			"        if (me == -1)",
+			"        {",
+			"            cout << \"Please give full marks :). Exiting...\" << endl;",
+			"            t.~binarySearchTree();",
+			"            delete &t;",
+			"",
+			"            return 0;",
+			"        }",
+			"        switch (me)",
+			"        {",
+			"        case 1:",
+			"            {",
+			"                cout << \"Input element(number>=0): \" << endl;",
+			"                int n;",
+			"                cin >> n;",
+			"                t.insert(n);",
+			"                break;",
+			"            }",
+			"        case 2:",
+			"            {",
+			"                cout << \"Input element to be deleted:\" << endl;",
+			"                int n;",
+			"                cin >> n;",
+			"                t.deleteElement(n);",
+			"                break;",
+			"            }",
+			"        case 3:",
+			"            {",
+			"                cout << \"---------------\" << endl;",
+			"                t.printTree();",
+			"                break;",
+			"            }",
+			"        case 4:",
+			"            {",
+			"                cout << \"Input element to search for:\" << endl;",
+			"                int n;",
+			"                cin >> n;",
+			"",
+			"                if (t.searchElement(n))",
+			"                    cout << \"found\" << endl;",
+			"                else",
+			"                    cout << \"not found\" << endl;",
+			"                break;",
+			"            }",
+			"        case 5:",
+			"            {",
+			"                t.preOrder();",
+			"                break;",
+			"            }",
+			"        case 6:",
+			"            {",
+			"                t.inOrder();",
+			"                break;",
+			"            }",
+			"        case 7:",
+			"            {",
+			"                t.postOrder();",
+			"                break;",
+			"            }",
+			"        default:",
+			"            cout << \"Invalid option. Please try again.\" << endl;",
+			"            break;",
+			"        }",
+			"    }",
+			"",
+			"    return 0;",
+			"}"
+		],
+		"description": "menubar.cpp file"
+	}
+}
