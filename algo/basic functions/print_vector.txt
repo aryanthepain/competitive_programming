@@ -1,6 +1,3 @@
-// author: Aryanthepain
-#include "basics.h"
-
 template <typename T>
 void print_vector(const vector<T> v)
 {
