@@ -1,0 +1,7 @@
+intellisense
+prettier
+blackbox
+snippets
+quick suggestion
+errorlens
+error gutters
