@@ -3,5 +3,6 @@ prettier
 blackbox
 snippets
 quick suggestion
+inline suggest
 errorlens
 error gutters
