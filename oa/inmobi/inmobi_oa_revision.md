@@ -37,7 +37,7 @@ The actual numeric values of the numbers in `nums` do not matter at all. Only th
 - If `nums[i]` is even, it counts as $0$.
 
 Thus, the problem is completely equivalent to:
-> Given a binary array of $0$s and $1$s, count how many subarrays have an exact sum equal to $k$.
+> Given a binary array of 0s and 1s, count how many subarrays have an exact sum equal to $k$.
 
 ### Observation 2 — The Challenge with Standard Sliding Window
 In a standard positive array sliding window, expanding the right pointer increases the window sum, and shrinking the left pointer decreases the sum.
@@ -153,7 +153,11 @@ Having this, we fix the pair $(p, q)$ and try to find the best suitable $l$ and 
 ### Step 1 — Decomposition into Decreasing Subarrays
 We first decompose our array `nums` into strictly decreasing subarrays.
 More specifically, we partition into $k$ contiguous pairs:
-$$(p_1, q_1), (p_2, q_2), \dots, (p_k, q_k)$$
+
+$$
+(p_1, q_1), (p_2, q_2), \dots, (p_k, q_k)
+$$
+
 where for every $i \le k$, the subarray $[p_i, q_i]$ is strictly decreasing, $p_1 = 0$, $q_k = n - 1$, and for every $i < k$, $q_i + 1 = p_{i+1}$.
 
 Visually, we cut `nums` in $k - 1$ places so that we end up with $k$ adjacent subarrays, and each subarray is strictly decreasing.
@@ -209,7 +213,10 @@ We define `maxEndingAt[i]` as the largest possible sum of a strictly increasing 
 
 - Initially, one element on its own is classified as an increasing subarray: `maxEndingAt[i] = nums[i]`.
 - If $nums[i-1] < nums[i]$, we can extend the best increasing subarray ending at $i-1$ by appending $nums[i]$. If `maxEndingAt[i-1] > 0`, we add it:
-$$\text{maxEndingAt}[i] = nums[i] + \max(0LL, \text{maxEndingAt}[i-1])$$
+
+$$
+\text{maxEndingAt}[i] = nums[i] + \max(0, \text{maxEndingAt}[i-1])
+$$
 
 ```cpp
 vector<long long> maxEndingAt(n);
@@ -245,7 +252,10 @@ A valid Trionic subarray requires:
 3. $q < n - 1$ and $nums[q] < nums[q+1]$ (strictly increasing slope leaves $q$).
 
 When valid, the maximum sum achievable through this $(p, q)$ is:
-$$\text{maxEndingAt}[p - 1] + sum(p, q) + \text{maxStartingAt}[q + 1]$$
+
+$$
+\text{maxEndingAt}[p - 1] + sum(p, q) + \text{maxStartingAt}[q + 1]
+$$
 
 We maximize this over all valid $(p, q)$.
 
@@ -506,7 +516,10 @@ At each step of the simulation while tasks remain unfinished (`done < N`):
    - `totwait += (cur_time - a)`.
    - If $d > 0$, push `finish` into `runq`.
 4. **Advance Time**: If all GPUs are busy or the ready queue is empty, leap `cur_time`:
-   $$cur\_time = \min(next\_arrival\_time, earliest\_gpu\_finish\_time)$$
+
+$$
+cur\_time = \min(next\_arrival\_time, earliest\_gpu\_finish\_time)
+$$
 
 ### Complete Clean C++ Solution
 
@@ -588,7 +601,11 @@ void solveMultiGPUScheduling() {
 - We must aggregate the total impressions and total clicks across all records for each unique `Ad_ID`.
 - **Eligibility Filter**: Only ads with strictly more than 100 total impressions ($\text{Impressions} > 100$) are eligible.
 - Click-Through Rate (CTR) formula:
-  $$\text{CTR} = \left(\frac{\text{Total Clicks}}{\text{Total Impressions}}\right) \times 100\%$$
+
+$$
+\text{CTR} = \left(\frac{\text{Total Clicks}}{\text{Total Impressions}}\right) \times 100\%
+$$
+
 - We must find the eligible ad with the **maximum CTR**.
 - **Tie-Breaking**: If multiple ads have the exact same highest CTR, pick the one with the **lexicographically smallest** `Ad_ID`.
 - **Output Requirement**: Output the best `Ad_ID` and its CTR **floored to 4 decimal places** (e.g. `AD123 12.3456`).
@@ -600,7 +617,11 @@ Comparing CTR values using floating-point types like `double` or `float` is a cl
 
 ### Observation 2 — Exact Rational Comparison via Cross-Multiplication
 To compare two candidate ads $A$ and $B$:
-$$\frac{Clicks_A}{Imp_A} > \frac{Clicks_B}{Imp_B} \iff Clicks_A \times Imp_B > Clicks_B \times Imp_A$$
+
+$$
+\frac{Clicks_A}{Imp_A} > \frac{Clicks_B}{Imp_B} \iff Clicks_A \times Imp_B > Clicks_B \times Imp_A
+$$
+
 - Since impressions and clicks fit well within $10^9$, their cross-product is at most $\approx 10^{18}$, which comfortably fits within standard signed 64-bit integer (`long long`, max $\approx 9.22 \times 10^{18}$).
 - This cross-multiplication comparison has **zero precision loss**.
 - If $Clicks_A \times Imp_B == Clicks_B \times Imp_A$, we break ties by string comparison: pick $ID_A < ID_B$.
@@ -618,9 +639,17 @@ if (lhs > rhs || (lhs == rhs && id < best_id)) {
 
 ### Observation 3 — Exact Floored Formatting without Floats
 The problem requires flooring the CTR to 4 decimal places:
-$$\text{CTR} = \frac{Clicks \times 100}{Imp}$$
+
+$$
+\text{CTR} = \frac{Clicks \times 100}{Imp}
+$$
+
 Floored to 4 decimal places means computing $\lfloor \text{CTR} \times 10^4 \rfloor$:
-$$\lfloor \text{CTR} \times 10^4 \rfloor = \left\lfloor \frac{Clicks \times 100 \times 10000}{Imp} \right\rfloor = \left\lfloor \frac{Clicks \times 10^6}{Imp} \right\rfloor$$
+
+$$
+\lfloor \text{CTR} \times 10^4 \rfloor = \left\lfloor \frac{Clicks \times 100 \times 10000}{Imp} \right\rfloor = \left\lfloor \frac{Clicks \times 10^6}{Imp} \right\rfloor
+$$
+
 - We perform purely integer arithmetic:
   `long long scaled = (best_clk * 1000000LL) / best_imp;`
 - The integer part is `scaled / 10000`.
@@ -691,14 +720,21 @@ void solveMaxCTR() {
 - We are given an integer array $A$ of length $N$ ($N \le 10^5$, $A[i] \le 10^9$).
 - For any subarray $A[L \dots R]$ ($0 \le L \le R < N$), the subarray cost is $\max(A[L \dots R])$.
 - We must find the sum of maximums across all possible subarrays:
-  $$\sum_{0 \le L \le R < N} \max(A[L \dots R])$$
+
+$$
+\sum_{0 \le L \le R < N} \max(A[L \dots R])
+$$
 
 ### Observation 1 — The Contribution Principle (Inversion of Counting)
 Instead of checking all $\mathcal{O}(N^2)$ subarrays and finding the maximum for each, we **invert our perspective**:
 > For each element $A[i]$, in exactly how many subarrays does $A[i]$ act as the maximum?
 
 If element $A[i]$ acts as the maximum in $C_i$ distinct subarrays, its total contribution to the final sum is simply:
-$$A[i] \times C_i$$
+
+$$
+A[i] \times C_i
+$$
+
 Summing $A[i] \times C_i$ across all $i \in [0, N-1]$ gives the answer in linear time!
 
 ### Observation 2 — Boundaries of Dominance
@@ -714,7 +750,10 @@ Then:
 - Any valid start index $L$ must lie in the range $(\text{left}[i], i]$. That gives $i - \text{left}[i]$ choices.
 - Any valid end index $R$ must lie in the range $[i, \text{right}[i])$. That gives $\text{right}[i] - i$ choices.
 - Total subarrays where $A[i]$ is the designated maximum:
-  $$C_i = (i - \text{left}[i]) \times (\text{right}[i] - i)$$
+
+$$
+C_i = (i - \text{left}[i]) \times (\text{right}[i] - i)
+$$
 
 ### Why is the condition asymmetrical? (Strictly Greater vs Greater or Equal)
 Consider an array with duplicates, e.g. `[4, 4]`:
@@ -801,10 +840,21 @@ long long sumOfSubarrayMaximums(const vector<long long>& a) {
 ### Problem Overview & Invariants
 - We have $N$ producers and $M$ consumers ($N, M \le 20000$).
 - We are given Linear Congruential Generator (LCG) parameters that define two strictly increasing arrays $X[0 \dots N-1]$ and $Y[0 \dots M-1]$:
-  $$X[i] = X[i-1] + ((i \cdot A_x + B_x) \bmod C_x) + 1$$
-  $$Y[j] = Y[j-1] + ((j \cdot A_y + B_y) \bmod C_y) + 1$$
+
+$$
+X[i] = X[i-1] + ((i \cdot A_x + B_x) \bmod C_x) + 1
+$$
+
+$$
+Y[j] = Y[j-1] + ((j \cdot A_y + B_y) \bmod C_y) + 1
+$$
+
 - The pairing cost between producer $i$ and consumer $j$ is:
-  $$\text{Cost}(i, j) = X[i] + Y[j]$$
+
+$$
+\text{Cost}(i, j) = X[i] + Y[j]
+$$
+
 - This creates an implicit grid of $N \times M$ pairing costs ($N \times M$ up to $4 \times 10^8$).
 - Goal: Find the $K$-th smallest pairing cost ($1 \le K \le N \cdot M$).
 
@@ -820,7 +870,11 @@ Because both $X$ and $Y$ are strictly increasing sequences:
 The answer lies in the range $[\text{low}, \text{high}] = [X[0] + Y[0], X[N-1] + Y[M-1]]$.
 
 For any candidate cost threshold $V$, we define a counting function:
-$$\text{countLessEqual}(V) = \text{number of pairs } (i, j) \text{ such that } X[i] + Y[j] \le V$$
+
+$$
+\text{countLessEqual}(V) = \text{number of pairs } (i, j) \text{ such that } X[i] + Y[j] \le V
+$$
+
 - If $\text{countLessEqual}(V) \ge K$, then the $K$-th smallest cost is $\le V$.
 - Otherwise, the $K$-th smallest cost is $> V$.
 
@@ -1010,7 +1064,11 @@ double findConsensusMedian(const vector<int>& a, const vector<int>& b, const vec
 
 ### Observation 1 — Anagrams Depend Only on Character Frequencies
 Since anagram equivalence ignores the order of characters, each string can be reduced to a 26-dimensional frequency vector:
-$$\text{cnt}[c] = \text{number of occurrences of letter } c \in ['A', 'Z']$$
+
+$$
+\text{cnt}[c] = \text{number of occurrences of letter } c \in ['A', 'Z']
+$$
+
 Two strings $X$ and $Y$ can be compared in $\mathcal{O}(26)$ time:
 - If $||X| - |Y|| > 1$: Impossible to be compatible. Return `false`.
 - If $|X| == |Y|$: Compatible if and only if $\text{cnt}_X == \text{cnt}_Y$.
@@ -1227,14 +1285,22 @@ public:
 - We must insert $X - Y$ "empty spots" (represented as height $0$) into queue $B$ to make both queues have length $X$, resulting in queue $B'$.
 - The relative ordering of the original $Y$ girls in $B'$ must remain strictly identical to their order in $B$.
 - The "unity score" is defined as:
-  $$\text{Score} = \sum_{i=0}^{X-1} A[i] \times B'[i]$$
+
+$$
+\text{Score} = \sum_{i=0}^{X-1} A[i] \times B'[i]
+$$
+
 - Goal: Find the maximum possible unity score.
 
 ### Observation 1 — Subsequence Alignment Perspective
 Notice what inserting $X - Y$ zeroes into queue $B$ actually means:
 - Any boy who is aligned with a $0$ in $B'$ contributes $A[i] \times 0 = 0$ to the sum.
 - The remaining $Y$ boys are paired with the $Y$ girls in order: boy $i_1$ with girl $0$, boy $i_2$ with girl $1$, $\dots$, boy $i_Y$ with girl $Y-1$, where:
-  $$0 \le i_1 < i_2 < \dots < i_Y < X$$
+
+$$
+0 \le i_1 < i_2 < \dots < i_Y < X
+$$
+
 - Therefore, the problem is completely equivalent to:
   > Choose an increasing subsequence of $Y$ boys from queue $A$ to match with the $Y$ girls in queue $B$ such that the sum of products $\sum_{j=0}^{Y-1} A[i_{j+1}] \times B[j]$ is maximized.
 
@@ -1243,10 +1309,16 @@ Let $dp[i][j]$ be the maximum unity score pairing a subset of the first $i$ boys
 When considering boy $i$ (at 0-indexed position $i - 1$):
 1. **Option 1 (Skip boy $i$)**: Align boy $i$ with a zero. The score is $dp[i - 1][j]$.
 2. **Option 2 (Match boy $i$ with girl $j$)**: Match boy $i - 1$ with girl $j - 1$. The score is:
-   $$dp[i - 1][j - 1] + A[i - 1] \times B[j - 1]$$
+
+$$
+dp[i - 1][j - 1] + A[i - 1] \times B[j - 1]
+$$
 
 Thus, the recurrence relation is:
-$$dp[i][j] = \max(dp[i - 1][j], dp[i - 1][j - 1] + A[i - 1] \times B[j - 1])$$
+
+$$
+dp[i][j] = \max(dp[i - 1][j], dp[i - 1][j - 1] + A[i - 1] \times B[j - 1])
+$$
 
 ### Step 2 — 1D Space Optimization
 Notice that row $i$ only depends on row $i - 1$.
@@ -1299,12 +1371,20 @@ long long solveJoJoPerfectionist(int x, int y, const vector<long long>& a, const
 - **Outbound Trip (Base $\to$ Destination)**:
   - We choose a non-empty group $S$ of size $1 \le |S| \le k$ from people at the base camp.
   - The trip takes duration:
-    $$d = \max_{p \in S}(time[p]) \times mul[stage]$$
+
+$$
+d = \max_{p \in S}(time[p]) \times mul[stage]
+$$
+
   - The stage advances cyclically by $\lfloor d \rfloor \pmod m$.
 - **Return Trip (Destination $\to$ Base)**:
   - Exactly 1 person already at the destination must row the boat back to the base.
   - The trip takes duration:
-    $$d = time[r] \times mul[stage]$$
+
+$$
+d = time[r] \times mul[stage]
+$$
+
   - The stage advances cyclically by $\lfloor d \rfloor \pmod m$.
 - Goal: Find the **minimum total time** to get all $n$ individuals to the destination.
 
@@ -1316,7 +1396,11 @@ The full state of the system is uniquely defined by:
 3. `boat`: location of the boat ($0$ = at base camp, $1$ = at destination).
 
 Total distinct states in the entire state space:
-$$\text{Total States} = 2^{12} \times 5 \times 2 = 4096 \times 10 = 40,960$$
+
+$$
+\text{Total States} = 2^{12} \times 5 \times 2 = 4096 \times 10 = 40,960
+$$
+
 This is very small!
 
 ### Step 1 — Graph Shortest Path via Dijkstra's Algorithm
@@ -1443,8 +1527,7 @@ Therefore:
 
 ### Observation 2 — Flattening the Tree via Euler Tour
 By performing a Depth First Search (DFS), we can assign each node $u$ an entry time $in[u]$ and exit time $out[u]$:
-- The entire subtree of node $s$ corresponds to the contiguous range of DFS entry times:
-  $$[in[s], out[s]]$$
+- The entire subtree of node $s$ corresponds to the contiguous range of DFS entry times: $[in[s], out[s]]$.
 - Thus:
   - Query 1 (Update node $s$): Add $\Delta = x - v_s$ to all indices in the interval $[in[s], out[s]]$.
   - Query 2 (Path sum to node $s$): Query the value at single index $in[s]$!
@@ -1594,9 +1677,17 @@ void solveDynamicTreePathSum() {
 
 ### Observation 1 — Reading the Constraints First
 Look carefully at the constraints:
-$$N \le 5000, \quad Q \le 5000$$
+
+$$
+N \le 5000, \quad Q \le 5000
+$$
+
 The maximum total number of operations in a direct linear scan is:
-$$N \times Q = 5000 \times 5000 = 2.5 \times 10^7$$
+
+$$
+N \times Q = 5000 \times 5000 = 2.5 \times 10^7
+$$
+
 In modern C++, a straightforward loop of $2.5 \times 10^7$ iterations with primitive integer operations executes in **under 30 milliseconds**!
 
 ### Observation 2 — The "Segment Tree Beats" Trap
@@ -1773,14 +1864,25 @@ vector<int> meximumArray(const vector<int>& arr) {
 
 ### Observation 1 — Problem Framing and Complementary Counting
 Total possible ordered pairs of cities is:
-$$\text{Total Pairs} = N^2$$
+
+$$
+\text{Total Pairs} = N^2
+$$
+
 If we can count the number of ordered pairs $(u, v)$ for which Morning $u \rightsquigarrow$ Afternoon $v + N$, then:
-$$\text{Impossible Pairs} = N^2 - \text{Possible Pairs}$$
+
+$$
+\text{Impossible Pairs} = N^2 - \text{Possible Pairs}
+$$
 
 ### Observation 2 — The Scale Dilemma
 - $N = 20000$ nodes, $M = 15000$ edges.
 - Running a standard BFS from each of the $N$ morning nodes takes:
-  $$\mathcal{O}(N \times (V + E)) = 20000 \times (40000 + 35000) \approx 1.5 \times 10^9 \text{ operations}$$
+
+$$
+\mathcal{O}(N \times (V + E)) = 20000 \times (40000 + 35000) \approx 1.5 \times 10^9 \text{ operations}
+$$
+
   This will easily exceed the typical 2.0-second time limit!
 
 ### Observation 3 — Bit-Parallel Acceleration (Chunked BFS with `std::bitset`)
@@ -1794,7 +1896,11 @@ Instead of running BFS for one morning node at a time, we process morning nodes 
 - Why is this so fast?
   1. 64 sources are processed in a single CPU instruction (word-level parallelism).
   2. The total number of BFS passes drops from $20,000$ to only:
-     $$\left\lceil \frac{20000}{2048} \right\rceil = 10 \text{ passes!}$$
+
+$$
+\left\lceil \frac{20000}{2048} \right\rceil = 10 \text{ passes!}
+$$
+
   3. Total runtime drops from $1.5 \times 10^9$ ops down to $\approx 2.5 \times 10^7$ ops ($< 0.35$ s).
 
 ```cpp
