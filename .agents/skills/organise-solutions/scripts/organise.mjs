@@ -39,7 +39,8 @@ const COMPANY_KEYWORDS = [
   'adobe', 'zomato', 'squarepoint', 'google', 'amazon', 'microsoft',
   'meta', 'uber', 'goldman', 'sprinklr', 'atlassian', 'tower_research',
   'tower', 'deshaw', 'de_shaw', 'cisco', 'salesforce', 'oracle', 'apple',
-  'flipkart', 'swiggy', 'morgan_stanley', 'jp_morgan', 'optiver', 'jane_street'
+  'flipkart', 'swiggy', 'morgan_stanley', 'jp_morgan', 'optiver', 'jane_street',
+  'inmobi', 'walmart', 'rubrik', 'cred', 'phonepe', 'meesho', 'rippling'
 ];
 
 function getUncommittedFiles() {
@@ -371,7 +372,11 @@ function generateCommitMessage(platform, files) {
       for (const fn of fileNames) {
         for (const kw of COMPANY_KEYWORDS) {
           if (fn.toLowerCase().includes(kw)) {
-            companies.add(kw.charAt(0).toUpperCase() + kw.slice(1));
+            let compName = kw.charAt(0).toUpperCase() + kw.slice(1);
+            if (kw === 'inmobi') compName = 'InMobi';
+            else if (kw === 'deshaw' || kw === 'de_shaw') compName = 'DE Shaw';
+            else if (kw === 'jp_morgan') compName = 'JP Morgan';
+            companies.add(compName);
           }
         }
       }
